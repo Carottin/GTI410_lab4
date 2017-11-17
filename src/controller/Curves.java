@@ -122,7 +122,7 @@ public class Curves extends AbstractTransformer implements DocObserver {
 				Shape s = (Shape)selectedObjects.get(0);
 				if (curve.getShapes().contains(s)){
 					int controlPointIndex = curve.getShapes().indexOf(s);
-					if (curve.getCurveType()== "Hermite")
+					if (curve.getCurveType()== "Hermite"|| curve.getCurveType()=="Bezier")
 					{
 						System.out.println("c'est un hermite");
 						ControlPoint cp = new ControlPoint(0,0);
@@ -166,7 +166,7 @@ public class Curves extends AbstractTransformer implements DocObserver {
 				Shape s = (Shape)selectedObjects.get(0);
 				if (curve.getShapes().contains(s)){
 					int controlPointIndex = curve.getShapes().indexOf(s);
-					if (curve.getCurveType()== "Hermite")
+					if (curve.getCurveType()== "Hermite"|| curve.getCurveType()=="Bezier")
 					{
 						System.out.println("c'est un hermite");
 						ControlPoint cp = new ControlPoint(0,0);
