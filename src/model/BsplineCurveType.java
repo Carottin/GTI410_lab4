@@ -13,6 +13,7 @@ public class BsplineCurveType extends CurveType{
 	 * @see model.CurveType#getNumberOfSegments(int)
 	 */
 	public int getNumberOfSegments(int numberOfControlPoints) {
+		System.out.println("coucou");
 		if (numberOfControlPoints >= 3) {
 			return (numberOfControlPoints - 3);
 		} else {
