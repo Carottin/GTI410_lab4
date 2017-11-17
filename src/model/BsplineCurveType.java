@@ -13,7 +13,6 @@ public class BsplineCurveType extends CurveType{
 	 * @see model.CurveType#getNumberOfSegments(int)
 	 */
 	public int getNumberOfSegments(int numberOfControlPoints) {
-		System.out.println("coucou");
 		if (numberOfControlPoints >= 3) {
 			return (numberOfControlPoints - 3);
 		} else {
@@ -34,7 +33,6 @@ public class BsplineCurveType extends CurveType{
 	public ControlPoint getControlPoint( List controlPoints,int segmentNumber, int controlPointNumber) {
 		if(segmentNumber==0){
 			return (ControlPoint)controlPoints.get(controlPointNumber);
-			
 		}
 		else {
 			return (ControlPoint)controlPoints.get(segmentNumber+controlPointNumber);
@@ -60,10 +58,10 @@ public class BsplineCurveType extends CurveType{
 	}
 
 	private List bezierMatrix = 
-		Matrix.buildMatrix4(-1*1/6,  3*1/6, -3*1/6, 1*1/6, 
-							 3*1/6, -6*1/6,  3*1/6, 0, 
-							-3*1/6,  0	  ,  3*1/6, 0, 
-							 1*1/6,  4*1/6,  1*1/6, 0);
+		Matrix.buildMatrix4(-1*1/6f,  3*1/6f, -3*1/6f, 1*1/6f, 
+							 3*1/6f, -6*1/6f,  3*1/6f, 0, 
+							-3*1/6f,  0	  ,  3*1/6f, 0, 
+							 1*1/6f,  4*1/6f,  1*1/6f, 0);
 							 
 	private List matrix = bezierMatrix;
 }
