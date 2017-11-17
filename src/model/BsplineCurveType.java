@@ -55,8 +55,8 @@ public class BsplineCurveType extends CurveType{
 	private List bezierMatrix = 
 		Matrix.buildMatrix4(-1,  3, -3, 1, 
 							 3, -6,  3, 0, 
-							-3,  3,  0, 0, 
-							 1,  0,  0, 0);
+							-3,  0,  3, 0, 
+							 1,  4,  1, 0);
 							 
 	private List matrix = bezierMatrix;
 }
