@@ -21,6 +21,7 @@ import view.Application;
 import view.CurvesPanel;
 
 import model.BezierCurveType;
+import model.BsplineCurveType;
 import model.ControlPoint;
 import model.Curve;
 import model.CurvesModel;
@@ -108,6 +109,8 @@ public class Curves extends AbstractTransformer implements DocObserver {
 			curve.setCurveType(new PolylineCurveType(CurvesModel.LINEAR));
 		} else if (string == CurvesModel.HERMITE) {
 			curve.setCurveType(new HermiteCurveType(CurvesModel.HERMITE));
+		}else if (string == CurvesModel.BSPLINE) {
+			curve.setCurveType(new BsplineCurveType(CurvesModel.BSPLINE));
 		}
 		else {
 			System.out.println("Curve type [" + string + "] is unknown.");
