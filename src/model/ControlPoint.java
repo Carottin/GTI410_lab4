@@ -38,6 +38,15 @@ public class ControlPoint extends Shape {
 		super(centerX, centerY);
 	}
 
+
+	
+	@Override
+	public String toString() {
+		return ""+getCenter();
+	}
+
+
+
 	/* (non-Javadoc)
 	 * @see model.Shape#draw(java.awt.Graphics)
 	 */
