@@ -45,15 +45,12 @@ public class BsplineCurveType extends CurveType{
 	 * @see model.CurveType#evalCurveAt(java.util.List, double)
 	 */
 	public Point evalCurveAt(List controlPoints, double t) {
-		//System.out.println(controlPoints);
 		List tVector = Matrix.buildRowVector4(Math.pow(t, 3), Math.pow(t, 2), Math.pow(t, 1), 1);
 		List gVector = Matrix.buildColumnVector4(((ControlPoint)controlPoints.get(0)).getCenter(), 
 			((ControlPoint)controlPoints.get(1)).getCenter(), 
 			((ControlPoint)controlPoints.get(2)).getCenter(),
 			((ControlPoint)controlPoints.get(3)).getCenter());
 		Point p = Matrix.eval(tVector, matrix, gVector);
-		//p.setLocation(-p.getX(),-p.getY());
-		System.out.println(p);
 		return p;
 	}
 

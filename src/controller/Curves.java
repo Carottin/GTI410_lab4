@@ -14,6 +14,7 @@
 */
 package controller;
 
+import java.awt.Point;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
@@ -116,7 +117,7 @@ public class Curves extends AbstractTransformer implements DocObserver {
 			System.out.println("Curve type [" + string + "] is unknown.");
 		}
 	}
-	
+	/* Alignement de type G1*/
 	public void alignControlPoint() {
 		if (curve != null) {
 			Document doc = Application.getInstance().getActiveDocument();
@@ -127,31 +128,45 @@ public class Curves extends AbstractTransformer implements DocObserver {
 					int controlPointIndex = curve.getShapes().indexOf(s);
 					if (curve.getCurveType()== "Hermite"|| curve.getCurveType()=="Bezier")
 					{
-						System.out.println("c'est un hermite");
-						ControlPoint cp = new ControlPoint(0,0);
-						ControlPoint cpPlus = new ControlPoint(0,0);
-						ControlPoint cpMoins = new ControlPoint(0,0);
+						ControlPoint cp = new ControlPoint(0,0); 	//Point a traiter
+						ControlPoint cpPlus = new ControlPoint(0,0);	// Point definissant le vecteur sortant
+						ControlPoint cpMoins = new ControlPoint(0,0);	//point definissant le vecteur entrant
 						cpMoins = (ControlPoint)curve.getShapes().get(controlPointIndex-1);
 						cp = (ControlPoint)curve.getShapes().get(controlPointIndex);
 						cpPlus = (ControlPoint)curve.getShapes().get(controlPointIndex+1);
+						/*****
+						 * Si le point est une untersection de courbes
+						 * 
+						 * Utilisation des extreme des tangentes pour tracer une courbes virtuelle
+						 * Positionnement du point en question sur le point de cette courbe le plus proche de
+						 * sa position initiale
+						 */
 						if (controlPointIndex %3 == 0)
 						{
-							System.out.println("salut");
-							double vectPreX= cp.getCenter().getX()-cpMoins.getCenter().getX();
-							System.out.println(vectPreX);
-							double vectPreY= cp.getCenter().getY()-cpMoins.getCenter().getY();
-							System.out.println(vectPreY);
-							double vectNextX= cpPlus.getCenter().getX()-cp.getCenter().getX();
-							System.out.println(vectNextX);
-							double vectNextY= cpPlus.getCenter().getY()-cp.getCenter().getY();
-							System.out.println(vectNextY);
-							if (!((vectPreX == vectNextX)&&(vectPreY == vectNextY))||((vectPreX == -vectNextX)&&(vectPreY == -vectNextY)))
-							{
-								System.out.println("coucou");
-								cp.getCenter().setLocation(cp.getCenter().getX(), (cpPlus.getCenter().getY()+cpMoins.getCenter().getY())/2);
-								curve.getShapes().set(controlPointIndex, cp);
-								curve.update();
-							}
+							double sx1 = cpMoins.getCenter().x;
+							double sy1 = cpMoins.getCenter().y;
+							double sx2 = cpPlus.getCenter().x;
+							double sy2 = cpPlus.getCenter().y;
+							double px = cp.getCenter().x;
+							double py = cp.getCenter().y;
+						    double xDelta = sx2 - sx1;
+						    double yDelta = sy2 - sy1;
+						    double u = ((px - sx1) * xDelta + (py - sy1) * yDelta) / (xDelta * xDelta + yDelta * yDelta);
+
+						    if (u < 0)
+						    {
+						    	cp.getCenter().setLocation(sx1, sy1);
+						    }
+						    else if (u > 1)
+						    {
+						    	cp.getCenter().setLocation(sx2, sy2);
+						    }
+						    else
+						    {
+						    	cp.getCenter().setLocation((sx1 + u * xDelta), (sy1 + u * yDelta));
+						    }						
+						    curve.getShapes().set(controlPointIndex, cp);
+							curve.update(); //Mise a jour de la courbe en graphique
 						}
 						
 					}
@@ -160,7 +175,8 @@ public class Curves extends AbstractTransformer implements DocObserver {
 			
 		}
 	}
-	
+
+	/* Alignement de type C1*/
 	public void symetricControlPoint() {
 		if (curve != null) {
 			Document doc = Application.getInstance().getActiveDocument();
@@ -171,13 +187,18 @@ public class Curves extends AbstractTransformer implements DocObserver {
 					int controlPointIndex = curve.getShapes().indexOf(s);
 					if (curve.getCurveType()== "Hermite"|| curve.getCurveType()=="Bezier")
 					{
-						System.out.println("c'est un hermite");
-						ControlPoint cp = new ControlPoint(0,0);
-						ControlPoint cpPlus = new ControlPoint(0,0);
-						ControlPoint cpMoins = new ControlPoint(0,0);
+						ControlPoint cp = new ControlPoint(0,0);		//Point a traiter
+						ControlPoint cpPlus = new ControlPoint(0,0);	// Point definissant le vecteur sortant
+						ControlPoint cpMoins = new ControlPoint(0,0); 	//point definissant le vecteur entrant
 						cpMoins = (ControlPoint)curve.getShapes().get(controlPointIndex-1);
 						cp = (ControlPoint)curve.getShapes().get(controlPointIndex);
 						cpPlus = (ControlPoint)curve.getShapes().get(controlPointIndex+1);
+						/*****
+						 * Si le point est une untersection de courbes
+						 * 
+						 * Utilisation des extreme des tangentes pour tracer une courbes virtuelle
+						 * Positionnement du point en question au millieu de cette courbe
+						 */
 						if (controlPointIndex %3 == 0)
 						{
 							double vectPreX= cp.getCenter().getX()-cpMoins.getCenter().getX();
@@ -188,7 +209,7 @@ public class Curves extends AbstractTransformer implements DocObserver {
 							{
 								cp.getCenter().setLocation((cpPlus.getCenter().getX()+cpMoins.getCenter().getX())/2, (cpPlus.getCenter().getY()+cpMoins.getCenter().getY())/2);
 								curve.getShapes().set(controlPointIndex, cp);
-								curve.update();
+								curve.update(); //Mise a jour graphique
 							}
 						}
 						

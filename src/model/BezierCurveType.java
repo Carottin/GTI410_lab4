@@ -66,7 +66,6 @@ public class BezierCurveType extends CurveType {
 	 * @see model.CurveType#evalCurveAt(java.util.List, double)
 	 */
 	public Point evalCurveAt(List controlPoints, double t) {
-		System.out.println(controlPoints);
 		List tVector = Matrix.buildRowVector4(t*t*t, t*t, t, 1);
 		List gVector = Matrix.buildColumnVector4(((ControlPoint)controlPoints.get(0)).getCenter(), 
 			((ControlPoint)controlPoints.get(1)).getCenter(), 
