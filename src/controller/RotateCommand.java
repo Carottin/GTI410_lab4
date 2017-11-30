@@ -55,7 +55,6 @@ public class RotateCommand extends AnchoredTransformationCommand {
 			shape = (Shape)iter.next();
 			mt.addMememto(shape);
 			AffineTransform t = shape.getAffineTransform();
-			t.translate(-25, -25);
 			shape.setAffineTransform(t);
 			t.rotate(thetaDegrees*Math.PI/180);
 			shape.setAffineTransform(t);
