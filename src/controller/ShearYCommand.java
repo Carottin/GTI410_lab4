@@ -53,7 +53,9 @@ public class ShearYCommand extends AnchoredTransformationCommand {
 			shape = (Shape)iter.next();
 			mt.addMememto(shape);
 			AffineTransform t = shape.getAffineTransform();
+			t.translate(getAnchorPoint(objects).getX(), getAnchorPoint(objects).getY());
 			t.shear(0,angleDegrees*Math.PI/180);
+			t.translate(-getAnchorPoint(objects).getX(), -getAnchorPoint(objects).getY());
 			shape.setAffineTransform(t);
 		}
 	}
