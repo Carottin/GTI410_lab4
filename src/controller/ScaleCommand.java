@@ -54,11 +54,11 @@ public class ScaleCommand extends AnchoredTransformationCommand {
 		while(iter.hasNext()){
 			shape = (Shape)iter.next();
 			mt.addMememto(shape);
-			AffineTransform t = shape.getAffineTransform();
-			t.translate(getAnchorPoint(objects).getX(), getAnchorPoint(objects).getY());
-			t.scale(sx,sy);
-			t.translate(-getAnchorPoint(objects).getX(), -getAnchorPoint(objects).getY());
-			shape.setAffineTransform(t);
+			AffineTransform t = shape.getAffineTransform(); // Create an affine transformation
+			t.translate(getAnchorPoint(objects).getX(), getAnchorPoint(objects).getY()); // translate anchor point to origin
+			t.scale(sx,sy); // set scale transformation
+			t.translate(-getAnchorPoint(objects).getX(), -getAnchorPoint(objects).getY()); // translate back the shape
+			shape.setAffineTransform(t); // apply transformation to the shape
 		}
 	}
 
